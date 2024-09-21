@@ -119,7 +119,7 @@ def findPossibles(
     return possibles
 
 
-def givePossibles(decrypted: tuple[str, list[tuple[str, list[str]]]]) -> None:
+def givePossibles(decrypted: tuple[str, list[tuple[str, list[str]]]]) -> list[list[str]]:
     """
     This function finds all possible decryptions of a message, given a scrambled message and a key.
     The function first creates a list of possible decryptions for each pair of letters in the scrambled message.
@@ -129,16 +129,18 @@ def givePossibles(decrypted: tuple[str, list[tuple[str, list[str]]]]) -> None:
     message = decrypted[0]
     nospaces = [i for i in message if i != " "]
     key = decrypted[1]
-    possibles = findPossibles(nospaces, key, [])
+    noSpacePossibles = findPossibles(nospaces,key,[])
 
-    format = [" " for i in message]
-    for i in possibles:
+    possibles = []
+    for i in range(len(noSpacePossibles)):
+        possibles.append([" " for i in message])
         index = 0
         for j in range(len(message)):
             if message[j] != " ":
-                format[j] = i[index]
+                possibles[i][j] = noSpacePossibles[i][index]
                 index += 1
-        print("".join(format))
+
+    return (possibles)
 
 
 if __name__ == "__main__":
@@ -146,4 +148,4 @@ if __name__ == "__main__":
     print(encrypted)
     decrypted = decrypt(encrypted)
     print(decrypted)
-    givePossibles(decrypted)
+    print(givePossibles(decrypted))
