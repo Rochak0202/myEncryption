@@ -166,10 +166,9 @@ def englishPossibles(possibles:list[list[str]]) -> list[str]:
 
 
 if __name__ == "__main__":
-    encrypted = encrypt("Hello World")
+    encrypted = encrypt("This message is encrypted")
     print(encrypted)
     decrypted = decrypt(encrypted)
-    print(decrypted)
+    print(decrypted[0])
     possibles = givePossibles(decrypted)
-    print(possibles)
     print(englishPossibles(possibles))
