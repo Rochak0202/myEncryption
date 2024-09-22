@@ -161,7 +161,6 @@ def englishPossibles(possibles:list[list[str]]) -> list[str]:
                 x = j+1
         if check:
             realPossibles.append(''.join(i))
-        print(count)
     
     return (realPossibles)
 
