@@ -153,7 +153,8 @@ def englishPossibles(possibles:list[list[str]]) -> list[str]:
         x = 0
         y = 0
         check = True
-        for j in range(len(i)):
+        j = 0
+        while check == True and j < len(i):
             if i[j] == " ":
                 y = j
                 if not isWord(''.join(i[x:y])):
@@ -162,6 +163,7 @@ def englishPossibles(possibles:list[list[str]]) -> list[str]:
             elif j == len(i)-1:
                 if not isWord(''.join(i[x:])):
                     check = False
+            j+=1
         if check:
             realPossibles.append(''.join(i))
     
