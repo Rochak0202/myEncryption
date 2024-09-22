@@ -149,7 +149,6 @@ def isWord(word:str) -> bool:
 
 def englishPossibles(possibles:list[list[str]]) -> list[str]:
     realPossibles = []
-    count = 0
     for i in possibles:
         x = 0
         y = 0
@@ -162,7 +161,6 @@ def englishPossibles(possibles:list[list[str]]) -> list[str]:
                 x = j+1
         if check:
             realPossibles.append(''.join(i))
-        count+=1
         print(count)
     
     return (realPossibles)
