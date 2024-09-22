@@ -155,7 +155,7 @@ def englishPossibles(possibles:list[list[str]]) -> list[str]:
         y = 0
         check = True
         for j in range(len(i)):
-            if i[j] == " " or j == len(i)-1:
+            if i[j] == " " or j == len(i):
                 y = j
                 if not isWord(''.join(i[x:y])):
                     check = False
