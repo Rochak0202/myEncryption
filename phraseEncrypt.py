@@ -9,7 +9,7 @@ ALPHABET = "abcdefghijklmnopqrstuvwxyz"
 NUMBERS = "1234567890"
 
 f = open("words.txt")
-wordlist = [i.lower() for i in f.read().split('\n')]
+wordlist = set(i.lower() for i in f.read().split('\n'))
 
 def encrypt(phraseToScramble: str) -> str:
     """
