@@ -154,11 +154,14 @@ def englishPossibles(possibles:list[list[str]]) -> list[str]:
         y = 0
         check = True
         for j in range(len(i)):
-            if i[j] == " " or j == len(i):
+            if i[j] == " ":
                 y = j
                 if not isWord(''.join(i[x:y])):
                     check = False
                 x = j+1
+            elif j == len(i)-1:
+                if not isWord(''.join(i[x:])):
+                    check = False
         if check:
             realPossibles.append(''.join(i))
     
@@ -166,7 +169,7 @@ def englishPossibles(possibles:list[list[str]]) -> list[str]:
 
 
 if __name__ == "__main__":
-    encrypted = encrypt("This message is encrypted")
+    encrypted = encrypt("this message is encrypted")
     print(encrypted)
     decrypted = decrypt(encrypted)
     print(decrypted[0])
