@@ -8,6 +8,8 @@ KB_ALPHABET = "qwertyuiopasdfghjklzxcvbnm"
 ALPHABET = "abcdefghijklmnopqrstuvwxyz"
 NUMBERS = "1234567890"
 
+f = open("words.txt")
+wordlist = [i.lower() for i in f.read().split('\n')]
 
 def encrypt(phraseToScramble: str) -> str:
     """
@@ -142,10 +144,35 @@ def givePossibles(decrypted: tuple[str, list[tuple[str, list[str]]]]) -> list[li
 
     return (possibles)
 
+def isWord(word:str) -> bool:
+    return word.lower() in wordlist
+
+def englishPossibles(possibles:list[list[str]]) -> list[str]:
+    realPossibles = []
+    count = 0
+    for i in possibles:
+        x = 0
+        y = 0
+        check = True
+        for j in range(len(i)):
+            if i[j] == " " or j == len(i)-1:
+                y = j
+                if not isWord(''.join(i[x:y])):
+                    check = False
+                x = j+1
+        if check:
+            realPossibles.append(''.join(i))
+        count+=1
+        print(count)
+    
+    return (realPossibles)
+
 
 if __name__ == "__main__":
     encrypted = encrypt("Hello World")
     print(encrypted)
     decrypted = decrypt(encrypted)
     print(decrypted)
-    print(givePossibles(decrypted))
+    possibles = givePossibles(decrypted)
+    print(possibles)
+    print(englishPossibles(possibles))
