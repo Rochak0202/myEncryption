@@ -90,7 +90,7 @@ def decrypt(encrypted: str) -> tuple[str, list[tuple[str, list[str]]]]:
             decrypted[i] = decryptedletters[j]
             j += 1
 
-    decrypted = "".join(decrypted).split(" ")
+    decrypted = "".join(decrypted)
     return (decrypted, unsureList)
 
 
@@ -128,12 +128,10 @@ def givePossibles(decrypted: tuple[str, list[tuple[str, list[str]]]]) -> list[li
     It then iterates through the list of possible decryptions, and for each possible decryption, it checks if it is a valid decryption.
     If it is, it adds the possible decryption to the list of possible decryptions.
     """
-    message = ' '.join(decrypted[0])
+    message = decrypted[0]
     nospaces = [i for i in message if i != " "]
     key = decrypted[1]
     noSpacePossibles = findPossibles(nospaces,key,[])
-    if len(key) == 0:
-        return [message]
 
     possibles = []
     for i in range(len(noSpacePossibles)):
@@ -167,86 +165,15 @@ def englishPossibles(possibles:list[list[str]]) -> list[str]:
                     check = False
             j+=1
         if check:
-            realPossibles.append(''.join(i).split(' '))
-        
+            realPossibles.append(''.join(i))
     
     return (realPossibles)
 
-def trueDecrypt(decrypted):
-    message = decrypted[0]
-    tracker = len(message)
-    key = decrypted[1][::-1]
-    copy = message
-    x = 1
-    y = len(message)-1
-    startIndex = 0
-
-    while x != y and x<y:
-        startstring = "".join(copy[:x])
-        endstring = "".join(copy[y:])
-
-        if len(startstring) == len(endstring):
-            numberCount = 0
-            for i in startstring:
-                if i in NUMBERS:
-                    numberCount+=1
-            fedMessage = copy[:x]+copy[y:]
-            tracker -= len(fedMessage)
-            print(tracker)
-            fedKey = key[len(key)-numberCount:][::-1]
-            possibleList = givePossibles((fedMessage, fedKey))
-            possibles = englishPossibles(possibleList)
-
-            for i in range(numberCount):
-                key.pop()
-            
-            if len(possibles) == 1:
-                for i in range(x):
-                    message[i] = possibles[0][i]
-                for i in range(len(copy)-y):
-                    message[-i-1] = possibles[0][-i-1]
-            else:
-                for i in range(x):
-                    message[i] = []
-                    for j in possibles:
-                        message[i].append(j[i])
-                for i in range(y):
-                    message[-i-1] = []
-                    for j in possibles:
-                        message[-i-1].append(j[-i-1])
-            
-            
-            copy = copy[x:y]
-            startIndex = x
-            x = 1
-            y = len(copy)-1
-
-        else:
-            if len(startstring) > len(endstring):
-                y-=1
-            else:
-                x+=1
-    
-    print(tracker)
-    possibleList = givePossibles((copy, key[::-1]))
-    possibles = englishPossibles(possibleList)
-    if len(possibles) == 1:
-        for i in range(len(copy)):
-            message[startIndex+i]=possibles[0][i]
-    else:
-        for i in range(len(copy)):
-            message[startIndex+i]=[]
-            for j in possibles:
-                    message[startIndex+i].append(j[i])
-
-    return message
 
 if __name__ == "__main__":
-    encrypted = encrypt("But when I'm way up here, it's crystal clear, that now i'm in a whole new world with you")
+    encrypted = encrypt("this message is encrypted")
     print(encrypted)
     decrypted = decrypt(encrypted)
     print(decrypted[0])
-    #print(decrypted[1])
-    #possibles = givePossibles(decrypted)
-    #print(englishPossibles(possibles))
-    print(trueDecrypt(decrypted))
+    possibles = givePossibles(decrypted)
+    print(englishPossibles(possibles))
